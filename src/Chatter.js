@@ -4,6 +4,7 @@ import store from './store';
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 
 import Login from './Login';
+import CreateAccount from './CreateAccount';
 import Home from './Home';
 
 const Chatter = () => {    
@@ -12,6 +13,7 @@ const Chatter = () => {
             <Router>
                 <Routes>
                     <Route path="/login" element={<Login />} />
+                    <Route path="/createAccount" element={<CreateAccount />} />
                     <Route path="/" element={<Home />} />
                 </Routes>
             </Router>

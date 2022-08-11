@@ -2,11 +2,19 @@ import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {increment, decrement, incrementByAmount} from './reducers/counterSlice';
+import {database as db, ref, onValue} from './firebase';
 
 const Home = () => {
     const navigate = useNavigate();
     const count = useSelector((state) => state.counter.value);
     const dispatch = useDispatch();
+    
+    const nameRef = ref(db, 'name/');
+
+    onValue(nameRef, (snapshot) => {
+        const name = snapshot.val();
+        console.log("name: " + name);
+    });
     
     return (
         <>
