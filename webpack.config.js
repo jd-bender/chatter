@@ -1,8 +1,8 @@
 const path = require("path");
 
-module.exports = {
+module.exports = (env) => ({
     entry: "./src/app.js",
-    mode: "development",
+    mode: env === 'production' ? 'production' : 'development',
     module: {
         rules: [
             {
@@ -23,13 +23,13 @@ module.exports = {
         publicPath: "/dist/",
         filename: "bundle.js"
     },
+    devtool: env === 'production' ? '' : 'inline-source-map',
     devServer: {
         static: {
             directory: path.join(__dirname, 'public')
         },
         compress: true,
         historyApiFallback: true,
-        open: true,
         port: 3000
     }
-};
+});
