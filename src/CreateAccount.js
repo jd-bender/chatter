@@ -1,121 +1,106 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import {auth, createUserWithEmailAndPassword} from './firebase';
+import validator from 'email-validator';
 
-const CreateAccount = () => {
-    const didMount = useRef(false);
+const CreateAccount = () => {  
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     
-    const [accountDetails, setAccountDetails] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: ""
-    });
-    
-    const [validation, setValidation] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: ""
-    });
+    const [firstNameValidationText, setFirstNameValidationText] = useState("");
+    const [lastNameValidationText, setLastNameValidationText] = useState("");
+    const [emailValidationText, setEmailValidationText] = useState("");
+    const [passwordValidationText, setPasswordValidationText] = useState("");
+    const [confirmPasswordValidationText, setConfirmPasswordValidationText] = useState("");
     
     useEffect(() => {
-        if (didMount.current) {
-            const hasInvalidInputs = checkForInvalidInputs();
-            
-            if (!hasInvalidInputs) {
-                submitAccountDetails();
-            } else {
-                console.log("has invalid inputs");
-            }
-        } else {
-            didMount.current = true;
+        const hasInvalidInputs = checkForInvalidInputs();
+        console.log("hasInvalidInputs: " + hasInvalidInputs);
+        if (!hasInvalidInputs) {
+            submitAccountDetails();
         }
-    }, [validation]);
+    }, [firstNameValidationText, lastNameValidationText, emailValidationText, passwordValidationText, confirmPasswordValidationText]);
     
     const checkForInvalidInputs = () => {
-        let hasInvalidInput = false;
-        const values = Object.values(validation);
-        
-        for (const val of values) {
-            if (val) {
-                hasInvalidInput = true;
-                break;
-            }
+        return !firstNameValidationText &&
+            !lastNameValidationText &&
+            !emailValidationText &&
+            !passwordValidationText &&
+            !confirmPasswordValidationText;
+    };
+    
+    const validateFirstName = () => {
+        console.log("in validateFirstName");
+        if (!firstName) {
+            console.log("no name");
+            setFirstNameValidationText("First name is required");
+        } else {
+            console.log("passed validation");
+            setFirstNameValidationText("");
         }
-        
-        return hasInvalidInput;
+    };
+    
+    const validateLastName = () => {
+        if (!lastName) {
+            setLastNameValidationText("Last name is required");
+        } else {
+            setLastNameValidationText("");
+        }
+    };
+    
+    const validateEmail = () => {
+        if (!email) {
+            setEmailValidationText("Email is required");
+        } else if (validator.validate(email)) {
+            setEmailValidationText("");
+        } else {
+            setEmailValidationText("Invalid email address");
+        }
+    };
+    
+    const validatePassword = () => {
+        if (!password) {
+            setPasswordValidationText("password is required");
+        } else if (password.length < 6) {
+            setPasswordValidationText("Password must be longer than 6 characters");
+        } else if (password.length >= 20) {
+            setPasswordValidationText("Password must shorter than 20 characters");
+        } else {
+            setPasswordValidationText("");
+        }
+    };
+    
+    const validateConfirmPassword = () => {
+        if (!confirmPassword) {
+            setConfirmPasswordValidationText("Password confirmation is required");
+        } else if (confirmPassword !== password) {
+            setConfirmPasswordValidationText("Password does not match confirmation password");
+        } else {
+            setConfirmPasswordValidationText("");
+        }
     };
     
     const validateInputs = () => {
-        let errors = validation;
-
-        if (!accountDetails.firstName) {
-            errors.firstName = "First name is required";
-        } else {
-            errors.firstName = "";
-        }
-
-        if (!accountDetails.lastName) {
-            errors.lastName = "Last name is required";
-        } else {
-            errors.lastName = "";
-        }
-
-        const emailCond = "/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/";
-        if (!accountDetails.email) {
-            errors.email = "Email is required";
-        } else if (!accountDetails.email.match(emailCond)) {
-            errors.email = "Please use a valid email address";
-        } else {
-            errors.email = "";
-        }
-
-        const cond1 = "/^(?=.*[a-z]).{6,20}$/";
-        const cond2 = "/^(?=.*[A-Z]).{6,20}$/";
-        const cond3 = "/^(?=.*[0-9]).{6,20}$/";
-        const password = accountDetails.password;
-        
-        if (!password) {
-            errors.password = "password is required";
-        } else if (password.length < 6) {
-            errors.password = "Password must be longer than 6 characters";
-        } else if (password.length >= 20) {
-            errors.password = "Password must shorter than 20 characters";
-        } else if (!password.match(cond1)) {
-            errors.password = "Password must contain at least one lowercase";
-        } else if (!password.match(cond2)) {
-            errors.password = "Password must contain at least one capital letter";
-        } else if (!password.match(cond3)) {
-            errors.password = "Password must contain at least a number";
-        } else {
-            errors.password = "";
-        }
-
-        if (!accountDetails.confirmPassword) {
-            errors.confirmPassword = "Password confirmation is required";
-        } else if (accountDetails.confirmPassword !== accountDetails.Password) {
-            errors.confirmPassword = "Password does not match confirmation password";
-        } else {
-            errors.password = "";
-        }
-        console.log("setting validation:");
-        console.log(errors);
-        setValidation(errors);
-    };
-    
-    const handleChange = (event) => {
-        const {name, value} = event.target;
-        setAccountDetails({...accountDetails, [name]: value});
+        console.log("validating inputs");
+        validateFirstName();
+        validateLastName();
+        validateEmail();
+        validatePassword();
+        validateConfirmPassword();
     };
     
     const submitAccountDetails = () => {
+        console.log("in submitAccountDetails");
         createUserWithEmailAndPassword(auth, email, password).then(userData => {
             console.log("successfully created user");
             console.log(userData); 
+        }).catch(e => {
+            console.log("something went wrong");
+            console.log(e);
         });
     };
     
@@ -125,45 +110,40 @@ const CreateAccount = () => {
             
             <TextField 
                 label="First Name" 
-                name="firstName"
-                value={accountDetails.firstName}
-                error={!!validation.firstName} 
-                helperText={validation.firstName}
-                onChange={(e) => handleChange(e)} 
+                value={firstName}
+                error={!!firstNameValidationText} 
+                helperText={firstNameValidationText}
+                onChange={(e) => setFirstName(e.target.value)} 
             />
             <TextField 
                 label="Last Name"
-                name="lastName" 
-                value={accountDetails.lastName}
-                error={!!validation.lastName} 
-                helperText={validation.lastName}
-                onChange={(e) => handleChange(e)}
+                value={lastName}
+                error={!!lastNameValidationText} 
+                helperText={lastNameValidationText}
+                onChange={(e) => setLastName(e.target.value)}
             />
             <TextField 
                 label="Email" 
-                name="email"
-                value={accountDetails.email}
-                error={!!validation.email} 
-                helperText={validation.email}
-                onChange={(e) => handleChange(e)} 
+                value={email}
+                error={!!emailValidationText} 
+                helperText={emailValidationText}
+                onChange={(e) => setEmail(e.target.value)} 
             />
             <TextField 
                 label="Password" 
-                name="password"
                 type="password"
-                value={accountDetails.password}
-                error={!!validation.password} 
-                helperText={validation.password}
-                onChange={(e) => handleChange(e)} 
+                value={password}
+                error={!!passwordValidationText} 
+                helperText={passwordValidationText}
+                onChange={(e) => setPassword(e.target.value)} 
             />
             <TextField 
                 label="Confirm Password" 
-                name="confirmPassword"
                 type="password"
-                value={accountDetails.confirmPassword}
-                error={!!validation.confirmPassword} 
-                helperText={validation.confirmPassword}
-                onChange={(e) => handleChange(e)} 
+                value={confirmPassword}
+                error={!!confirmPasswordValidationText} 
+                helperText={confirmPasswordValidationText}
+                onChange={(e) => setConfirmPassword(e.target.value)} 
             />
             
             <button onClick={validateInputs}>Submit</button>
