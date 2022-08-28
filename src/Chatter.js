@@ -9,22 +9,20 @@ import Login from './Login';
 import CreateAccount from './CreateAccount';
 import Home from './Home';
 
-const Chatter = () => {    
-    return (
-        <Provider store={store}>
-            <Router>
-                <Routes>
-                    <Route element={<PrivateRoutes/>}>
-                        <Route path="/" element={<Home />} />
-                    </Route>
-                    <Route element={<PublicRoutes/>}>
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/createAccount" element={<CreateAccount />} />
-                    </Route>
-                </Routes>
-            </Router>
-        </Provider>
-    );
-}
+const Chatter = () => (
+    <Provider store={store}>
+        <Router>
+            <Routes>
+                <Route element={<PrivateRoutes/>}>
+                    <Route path="/" element={<Home />} />
+                </Route>
+                <Route element={<PublicRoutes/>}>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/createAccount" element={<CreateAccount />} />
+                </Route>
+            </Routes>
+        </Router>
+    </Provider>
+);
 
 export default Chatter;
