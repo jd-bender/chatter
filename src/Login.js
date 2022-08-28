@@ -36,6 +36,12 @@ const Login = () => {
         });
     };
 
+    const checkIfEnterKeyPressed = (e) => {
+        if (e.key === "Enter") {
+            login();
+        }
+    };
+
     const inputStyles = {
         mb: '1%'
     };
@@ -50,6 +56,7 @@ const Login = () => {
                 value={email}
                 sx={inputStyles}
                 disabled={isLoggingIn}
+                onKeyDown={checkIfEnterKeyPressed}
                 onChange={(e) => setEmail(e.target.value)} />
             <TextField 
                 label="Password" 
@@ -58,6 +65,7 @@ const Login = () => {
                 value={password}
                 sx={inputStyles}
                 disabled={isLoggingIn}
+                onKeyDown={checkIfEnterKeyPressed}
                 onChange={(e) => setPassword(e.target.value)} />
 
             {

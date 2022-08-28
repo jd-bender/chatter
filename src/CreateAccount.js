@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
-import {Box, TextField, Button} from '@mui/material';
+import {Box, TextField, Button, CircularProgress} from '@mui/material';
 import {createUserWithEmailAndPassword} from 'firebase/auth';
 import {setUser} from './reducers/userSlice';
 import {useDispatch} from 'react-redux';
@@ -13,10 +13,13 @@ const CreateAccount = () => {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isCreatingAccount, setIsCreatingAccount] = useState(false);
 
     const dispatch = useDispatch();
     
     const submitAccountDetails = () => {
+        setIsCreatingAccount(true);
+
         createUserWithEmailAndPassword(auth, email, password).then(userData => {
             set(ref(db, `users/${userData.user.uid}`), {
                 firstName,
@@ -29,18 +32,24 @@ const CreateAccount = () => {
                     lastName,
                     email
                 }));
+
+                setIsCreatingAccount(false);
             }).catch(e => {
-                console.log("something went wrong:");
-                console.log(e);
+                setIsCreatingAccount(false);
             });
         }).catch(e => {
-            console.log("something went wrong:");
-            console.log(e);
+            setIsCreatingAccount(false);
         });
     };
 
     const inputStyles = {
         mb: '1%'
+    };
+
+    const checkIfEnterKeyPressed = (e) => {
+        if (e.key === "Enter") {
+            submitAccountDetails();
+        }
     };
     
     return (
@@ -51,18 +60,24 @@ const CreateAccount = () => {
                 label="First Name" 
                 value={firstName}
                 sx={inputStyles}
+                disabled={isCreatingAccount}
+                onKeyDown={checkIfEnterKeyPressed}
                 onChange={(e) => setFirstName(e.target.value)} 
             />
             <TextField 
                 label="Last Name"
                 value={lastName}
                 sx={inputStyles}
+                disabled={isCreatingAccount}
+                onKeyDown={checkIfEnterKeyPressed}
                 onChange={(e) => setLastName(e.target.value)}
             />
             <TextField 
                 label="Email" 
                 value={email}
                 sx={inputStyles}
+                disabled={isCreatingAccount}
+                onKeyDown={checkIfEnterKeyPressed}
                 onChange={(e) => setEmail(e.target.value)} 
             />
             <TextField 
@@ -70,10 +85,18 @@ const CreateAccount = () => {
                 type="password"
                 value={password}
                 sx={inputStyles}
+                disabled={isCreatingAccount}
+                onKeyDown={checkIfEnterKeyPressed}
                 onChange={(e) => setPassword(e.target.value)} 
             />
+
+            {
+                isCreatingAccount ? 
+                    <CircularProgress sx={inputStyles} />
+                    : 
+                    <Button variant="contained" sx={inputStyles} onClick={submitAccountDetails}>Submit</Button>
+            }
             
-            <Button variant="contained" sx={inputStyles} onClick={submitAccountDetails}>Submit</Button>
             <Link to='/login'>Return</Link>
         </Box>  
     );
