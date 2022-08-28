@@ -1,7 +1,7 @@
 const path = require("path");
 
 module.exports = (env) => ({
-    entry: "./src/app.js",
+    entry: "./src/index.js",
     mode: env === 'production' ? 'production' : 'development',
     module: {
         rules: [
