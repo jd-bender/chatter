@@ -3,11 +3,13 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
+import {navbarWidth, headerHeight} from './styles/layoutStyles';
+
 const Header = () => {
     const styles = { 
-        width: `calc(100% - 240px)`,
-        height: `65px`, 
-        ml: `240px` 
+        width: `calc(100% - ${navbarWidth}px)`,
+        height: `${headerHeight}px`,
+        ml: `${navbarWidth}px` 
     };
 
     return (

@@ -5,6 +5,7 @@ import {auth} from './firebase';
 import {Box, CssBaseline} from '@mui/material';
 import Header from './Header';
 import NavBar from './NavBar';
+import {navbarWidth, headerHeight} from './styles/layoutStyles';
 
 const Home = () => {
     const user = useSelector(state => state.user);
@@ -20,7 +21,7 @@ const Home = () => {
             <CssBaseline />
             <Header />
             <NavBar />
-            <Box component="main" sx={{flexGrow: 1, p: 3, ml: '240px', mt: '65px'}}>
+            <Box component="main" sx={{flexGrow: 1, p: 3, ml: `${navbarWidth}px`, mt: `${headerHeight}px`}}>
                 <p>Home</p> 
                 <p>first name: {firstName}</p>
                 <p>last name: {lastName}</p>

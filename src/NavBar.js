@@ -1,12 +1,13 @@
 import React from 'react';
 import {Drawer, Divider} from '@mui/material';
+import {navbarWidth} from './styles/layoutStyles';
 
 const NavBar = () => {
     const styles = {
-        width: 240,
+        width: navbarWidth,
         flexShrink: 0,
         '& .MuiDrawer-paper': {
-            width: 240,
+            width: navbarWidth,
             boxSizing: 'border-box'
         }
     };
