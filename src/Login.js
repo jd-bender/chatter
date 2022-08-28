@@ -6,6 +6,7 @@ import {signInWithEmailAndPassword} from 'firebase/auth';
 import {child, get, ref} from 'firebase/database';
 import {setUser} from './reducers/userSlice';
 import {auth, database as db} from './firebase';
+import {middleOfScreenStyles} from './styles/layoutStyles';
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -35,22 +36,12 @@ const Login = () => {
         });
     };
 
-    const styles = {
-        flexGrow: 1,
-        p: 3,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh'
-    };
-
     const inputStyles = {
         mb: '1%'
     };
 
     return (
-        <Box sx={styles}>
+        <Box sx={middleOfScreenStyles}>
             <p>Chatter Login</p>
 
             <TextField 
