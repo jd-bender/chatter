@@ -1,7 +1,7 @@
 import React from 'react';
 import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+import {Toolbar, Typography, IconButton} from '@mui/material';
+import {AccountCircle} from '@mui/icons-material';
 
 import {navbarWidth, headerHeight} from './styles/layoutStyles';
 
@@ -15,7 +15,10 @@ const Header = () => {
     return (
         <AppBar sx={styles} position="fixed">
             <Toolbar>
-                <Typography>Chatter</Typography>
+                <Typography sx={{flexGrow: 1}}>Chatter</Typography>
+                <IconButton size="large" color="inherit">
+                    <AccountCircle />
+                </IconButton>
             </Toolbar>
         </AppBar>
     );
