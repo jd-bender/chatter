@@ -13,10 +13,10 @@ const Chatter = () => (
     <Provider store={store}>
         <Router>
             <Routes>
-                <Route element={<PrivateRoutes/>}>
+                <Route element={<PrivateRoutes />}>
                     <Route path="/" element={<Home />} />
                 </Route>
-                <Route element={<PublicRoutes/>}>
+                <Route element={<PublicRoutes />}>
                     <Route path="/login" element={<Login />} />
                     <Route path="/createAccount" element={<CreateAccount />} />
                 </Route>

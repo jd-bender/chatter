@@ -20,10 +20,11 @@ auth.onAuthStateChanged(user => {
                 uid: user.uid,
                 ...data
             }));
+
+            root.render(<Chatter />);
         });
     } else {
         store.dispatch(setUser({}));
+        root.render(<Chatter />);
     }
-
-    root.render(<Chatter />);
 });
