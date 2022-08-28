@@ -3,8 +3,8 @@ import {Provider} from 'react-redux';
 import store from './store';
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 
-import PublicRoutes from './PublicRoutes';
-import PrivateRoutes from './PrivateRoutes';
+import PublicRoutes from './routes/PublicRoutes';
+import PrivateRoutes from './routes/PrivateRoutes';
 import Login from './Login';
 import CreateAccount from './CreateAccount';
 import Home from './Home';

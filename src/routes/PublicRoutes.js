@@ -3,7 +3,7 @@ import {useSelector} from 'react-redux';
 import {Navigate, Outlet} from 'react-router-dom';
 
 const PublicRoutes = () => {
-    const isAuthenticated = useSelector((state) => !!state.auth.uid);
+    const isAuthenticated = useSelector((state) => !!state.user.uid);
     
     return (
         isAuthenticated ? <Navigate replace to="/" /> : <Outlet />
