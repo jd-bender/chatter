@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import AppBar from '@mui/material/AppBar';
+import {useNavigate} from 'react-router-dom';
 import {Toolbar, Typography, IconButton, Menu, MenuItem} from '@mui/material';
 import {AccountCircle} from '@mui/icons-material';
 import {signOut} from 'firebase/auth';
@@ -9,6 +10,7 @@ import {navbarWidth, headerHeight} from './styles/layoutStyles';
 
 const Header = () => {
     const [anchorComponent, setAnchorComponent] = useState(null);
+    const navigate = useNavigate();
 
     const openMenu = (event) => {
         setAnchorComponent(event.currentTarget);
@@ -16,6 +18,14 @@ const Header = () => {
 
     const closeMenu = () => {
         setAnchorComponent(null);
+    };
+
+    const navigateToHome = () => {
+        navigate('/');
+    };
+
+    const navigateToMyProfile = () => {
+        navigate('/myProfile');
     };
 
     const logout = () => {
@@ -51,7 +61,7 @@ const Header = () => {
     return (
         <AppBar sx={appBarStyles} position="fixed">
             <Toolbar sx={toolbarStyles}>
-                <Typography variant='h3' sx={typographyStyles}>Chatter</Typography>
+                <Typography variant='h3' sx={typographyStyles} onClick={navigateToHome}>Chatter</Typography>
                 <IconButton size="large" color="inherit" onClick={openMenu}>
                     <AccountCircle sx={accountCircleStyles} />
                 </IconButton>
@@ -63,6 +73,7 @@ const Header = () => {
                     open={Boolean(anchorComponent)}
                     onClose={closeMenu}
                 >
+                    <MenuItem onClick={navigateToMyProfile}>My Profile</MenuItem>
                     <MenuItem onClick={logout}>Log Out</MenuItem>
               </Menu>
             </Toolbar>

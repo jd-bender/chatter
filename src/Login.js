@@ -36,6 +36,27 @@ const Login = () => {
         });
     };
 
+    const quickLogin = () => {
+        setIsLoggingIn(true);
+        
+        signInWithEmailAndPassword(auth, 'e@em.com', 'password22222').then(userData => {
+            get(child(ref(db), `users/${userData.user.uid}`)).then((snapshot) => {
+                const data = snapshot.val();
+
+                dispatch(setUser({
+                    uid: userData.user.uid,
+                    ...data
+                }));
+
+                setIsLoggingIn(false);
+            }).catch(e => {
+                setIsLoggingIn(false);
+            });
+        }).catch(e => {
+            setIsLoggingIn(false);
+        });
+    };
+
     const checkIfEnterKeyPressed = (e) => {
         if (e.key === "Enter") {
             login();
@@ -72,7 +93,10 @@ const Login = () => {
                 isLoggingIn ? 
                     <CircularProgress sx={inputStyles} />
                     : 
-                    <Button variant="contained" sx={inputStyles} onClick={login}>Login</Button>
+                    <>
+                        <Button variant="contained" sx={inputStyles} onClick={quickLogin}>Quick Login</Button>
+                        <Button variant="contained" sx={inputStyles} onClick={login}>Login</Button>
+                    </>
             }
             
             <Link to="/createAccount">Sign Up</Link>
