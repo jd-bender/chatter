@@ -26,6 +26,7 @@ const Header = () => {
 
     const navigateToMyProfile = () => {
         navigate('/myProfile');
+        closeMenu();
     };
 
     const logout = () => {
@@ -68,7 +69,6 @@ const Header = () => {
                 <Menu
                     anchorEl={anchorComponent}
                     anchorOrigin={menuOrigin}
-                    keepMounted
                     transformOrigin={menuOrigin}
                     open={Boolean(anchorComponent)}
                     onClose={closeMenu}

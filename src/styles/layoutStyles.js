@@ -11,4 +11,18 @@ const middleOfScreenStyles = {
     height: '100vh'
 };
 
-export {navbarWidth, headerHeight, middleOfScreenStyles};
+const mainViewStyles = {
+    flexGrow: 1,
+    p: 3,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: `100vh - ${headerHeight}px`
+};
+
+const inputStyles = {
+    mb: '1%'
+};
+
+export {navbarWidth, headerHeight, middleOfScreenStyles, mainViewStyles, inputStyles};

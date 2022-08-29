@@ -6,7 +6,7 @@ import {setUser} from './reducers/userSlice';
 import {useDispatch} from 'react-redux';
 import {set, ref} from 'firebase/database';
 import {auth, database as db} from './firebase';
-import {middleOfScreenStyles} from './styles/layoutStyles';
+import {middleOfScreenStyles, inputStyles} from './styles/layoutStyles';
 
 const CreateAccount = () => {  
     const [firstName, setFirstName] = useState("");
@@ -40,10 +40,6 @@ const CreateAccount = () => {
         }).catch(e => {
             setIsCreatingAccount(false);
         });
-    };
-
-    const inputStyles = {
-        mb: '1%'
     };
 
     const checkIfEnterKeyPressed = (e) => {
