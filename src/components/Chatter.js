@@ -8,7 +8,7 @@ import PublicRoutes from '../routes/PublicRoutes';
 import PrivateRoutes from '../routes/PrivateRoutes';
 import Login from './Login';
 import CreateAccount from './CreateAccount';
-import MainView from './MainView';
+import Dashboard from './Dashboard';
 
 export default function Chatter() {
     return (
@@ -18,7 +18,7 @@ export default function Chatter() {
             <BrowserRouter>
                 <Routes>
                     <Route element={<PrivateRoutes />}>
-                        <Route path="*" element={<MainView />} />
+                        <Route path="*" element={<Dashboard />} />
                     </Route>
                     <Route element={<PublicRoutes />}>
                         <Route path="/login" element={<Login />} />

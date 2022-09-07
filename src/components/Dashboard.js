@@ -7,7 +7,7 @@ import Home from './Home';
 import UserProfileEditor from './UserProfileEditor';
 import {navbarWidth, headerHeight} from '../styles/layoutStyles';
 
-export default function MainView() {
+export default function Dashboard() {
     const styles = {
         flexGrow: 1, 
         p: 3, 
