@@ -1,11 +1,11 @@
 import React from 'react';
 import {Provider} from 'react-redux';
-import store from './store';
+import store from '../store';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {CssBaseline} from '@mui/material';
 
-import PublicRoutes from './routes/PublicRoutes';
-import PrivateRoutes from './routes/PrivateRoutes';
+import PublicRoutes from '../routes/PublicRoutes';
+import PrivateRoutes from '../routes/PrivateRoutes';
 import Login from './Login';
 import CreateAccount from './CreateAccount';
 import MainView from './MainView';

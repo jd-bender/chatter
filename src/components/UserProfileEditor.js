@@ -3,14 +3,17 @@ import {useSelector} from 'react-redux';
 import {Box, Typography, TextField, Button} from '@mui/material';
 import {updateEmail} from 'firebase/auth';
 import {update, ref} from 'firebase/database';
-import {database as db, auth} from './firebase';
-import {mainViewStyles, inputStyles} from './styles/layoutStyles';
+import {database as db, auth} from '../firebase';
+import ToastAlert from './ToastAlert';
+import {mainViewStyles, inputStyles} from '../styles/layoutStyles';
 
 export default function UserProfileEditor() {
     const user = useSelector(state => state.user);
     const [firstName, setFirstName] = useState(user.firstName || "");
     const [lastName, setLastName] = useState(user.lastName || "");
     const [email, setEmail] = useState(user.email || "");
+    const [alertOpen, setAlertOpen] = useState(false);
+    const [alertSeverity, setAlertSeverity] = useState("");
 
     const updateUserData = () => {
         return update(ref(db, `users/${user.uid}`), {
@@ -36,6 +39,10 @@ export default function UserProfileEditor() {
         });
     };
 
+    const openAlert = () => {
+        setAlertSeverity
+    };
+
     return (
         <Box sx={mainViewStyles}>
             <Typography sx={inputStyles}>My Profile</Typography>
@@ -59,6 +66,8 @@ export default function UserProfileEditor() {
                 onChange={(e) => setEmail(e.target.value)} />
 
             <Button variant="contained" onClick={saveProfileChanges}>Save Changes</Button>
+
+            <ToastAlert open={alertOpen} severity={alertSeverity} />
         </Box>
     );
 };

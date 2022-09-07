@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {Box, TextField, Button, CircularProgress} from '@mui/material';
 import {createUserWithEmailAndPassword} from 'firebase/auth';
-import {setUser} from './reducers/userSlice';
+import {setUser} from '../reducers/userSlice';
 import {useDispatch} from 'react-redux';
 import {set, ref} from 'firebase/database';
-import {auth, database as db} from './firebase';
-import {middleOfScreenStyles, inputStyles} from './styles/layoutStyles';
+import {auth, database as db} from '../firebase';
+import {middleOfScreenStyles, inputStyles} from '../styles/layoutStyles';
 
 export default function CreateAccount() {  
     const [firstName, setFirstName] = useState("");

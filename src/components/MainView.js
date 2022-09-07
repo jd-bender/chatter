@@ -5,7 +5,7 @@ import NavBar from './NavBar';
 import {Routes, Route} from "react-router-dom";
 import Home from './Home';
 import UserProfileEditor from './UserProfileEditor';
-import {navbarWidth, headerHeight} from './styles/layoutStyles';
+import {navbarWidth, headerHeight} from '../styles/layoutStyles';
 
 export default function MainView() {
     const styles = {

@@ -1,6 +1,6 @@
 import React from "react";
 import {createRoot} from "react-dom/client";
-import Chatter from "./Chatter.js";
+import Chatter from "./components/Chatter.js";
 import {auth, database as db} from "./firebase.js";
 import {child, get, ref} from 'firebase/database';
 import {setUser} from './reducers/userSlice';

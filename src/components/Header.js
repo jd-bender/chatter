@@ -4,9 +4,9 @@ import {useNavigate} from 'react-router-dom';
 import {Toolbar, Typography, IconButton, Menu, MenuItem} from '@mui/material';
 import {AccountCircle} from '@mui/icons-material';
 import {signOut} from 'firebase/auth';
-import {auth} from './firebase';
+import {auth} from '../firebase';
 
-import {navbarWidth, headerHeight} from './styles/layoutStyles';
+import {navbarWidth, headerHeight} from '../styles/layoutStyles';
 
 export default function Header() {
     const [anchorComponent, setAnchorComponent] = useState(null);

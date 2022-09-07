@@ -1,6 +1,6 @@
 import React from 'react';
 import {Drawer, Divider} from '@mui/material';
-import {navbarWidth} from './styles/layoutStyles';
+import {navbarWidth} from '../styles/layoutStyles';
 
 export default function NavBar() {
     const styles = {

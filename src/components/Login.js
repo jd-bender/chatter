@@ -4,9 +4,9 @@ import {Link} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {signInWithEmailAndPassword} from 'firebase/auth';
 import {child, get, ref} from 'firebase/database';
-import {setUser} from './reducers/userSlice';
-import {auth, database as db} from './firebase';
-import {middleOfScreenStyles} from './styles/layoutStyles';
+import {setUser} from '../reducers/userSlice';
+import {auth, database as db} from '../firebase';
+import {middleOfScreenStyles} from '../styles/layoutStyles';
 
 export default function Login() {
     const [email, setEmail] = useState("");

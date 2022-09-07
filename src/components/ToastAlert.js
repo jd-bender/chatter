@@ -20,7 +20,7 @@ export default function ToastAlert(props) {
     return (
         <Snackbar open={open} autoHideDuration={props.autoHideDuration || 3000} onClose={handleClose}>
             <Alert onClose={handleClose} severity={props.severity} sx={{width: '100%'}}>
-                This is a success message!
+                {props.alertText}
             </Alert>
         </Snackbar>
     );
