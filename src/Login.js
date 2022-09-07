@@ -8,7 +8,7 @@ import {setUser} from './reducers/userSlice';
 import {auth, database as db} from './firebase';
 import {middleOfScreenStyles} from './styles/layoutStyles';
 
-const Login = () => {
+export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isLoggingIn, setIsLoggingIn] = useState(false);
@@ -103,5 +103,3 @@ const Login = () => {
         </Box>
     );
 };
-
-export default Login;

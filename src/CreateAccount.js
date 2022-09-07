@@ -8,7 +8,7 @@ import {set, ref} from 'firebase/database';
 import {auth, database as db} from './firebase';
 import {middleOfScreenStyles, inputStyles} from './styles/layoutStyles';
 
-const CreateAccount = () => {  
+export default function CreateAccount() {  
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -97,5 +97,3 @@ const CreateAccount = () => {
         </Box>  
     );
 };
-
-export default CreateAccount;

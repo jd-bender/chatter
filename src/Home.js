@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
 import {Box} from '@mui/material';
 
-const Home = () => {
+export default function Home() {
     const user = useSelector(state => state.user);
     const [firstName, setFirstName] = useState(user.firstName || "");
     const [lastName, setLastName] = useState(user.lastName || "");
@@ -15,5 +15,3 @@ const Home = () => {
         </Box>
     );
 };
-
-export default Home;

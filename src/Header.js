@@ -8,7 +8,7 @@ import {auth} from './firebase';
 
 import {navbarWidth, headerHeight} from './styles/layoutStyles';
 
-const Header = () => {
+export default function Header() {
     const [anchorComponent, setAnchorComponent] = useState(null);
     const navigate = useNavigate();
 
@@ -80,5 +80,3 @@ const Header = () => {
         </AppBar>
     );
 };
-
-export default Header;

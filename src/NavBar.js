@@ -2,7 +2,7 @@ import React from 'react';
 import {Drawer, Divider} from '@mui/material';
 import {navbarWidth} from './styles/layoutStyles';
 
-const NavBar = () => {
+export default function NavBar() {
     const styles = {
         width: navbarWidth,
         flexShrink: 0,
@@ -17,5 +17,3 @@ const NavBar = () => {
         </Drawer>
     );
 };
-
-export default NavBar;

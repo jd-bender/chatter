@@ -3,10 +3,10 @@ import {useSelector} from 'react-redux';
 import {Box, Typography, TextField, Button} from '@mui/material';
 import {updateEmail} from 'firebase/auth';
 import {update, ref} from 'firebase/database';
-import {auth} from './firebase';
+import {database as db, auth} from './firebase';
 import {mainViewStyles, inputStyles} from './styles/layoutStyles';
 
-const UserProfileEditor = () => {
+export default function UserProfileEditor() {
     const user = useSelector(state => state.user);
     const [firstName, setFirstName] = useState(user.firstName || "");
     const [lastName, setLastName] = useState(user.lastName || "");
@@ -28,9 +28,10 @@ const UserProfileEditor = () => {
     };
 
     const saveProfileChanges = () => {
-        updateEmail(auth, email).then(() => {
+        updateEmail(auth.currentUser, email).then(() => {
             updateUserData();
         }).catch(e => {
+            console.error(e);
             updateUserData();
         });
     };
@@ -61,5 +62,3 @@ const UserProfileEditor = () => {
         </Box>
     );
 };
-
-export default UserProfileEditor;

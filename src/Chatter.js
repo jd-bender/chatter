@@ -10,22 +10,22 @@ import Login from './Login';
 import CreateAccount from './CreateAccount';
 import MainView from './MainView';
 
-const Chatter = () => (
-    <Provider store={store}>
-        <CssBaseline />
-
-        <BrowserRouter>
-            <Routes>
-                <Route element={<PrivateRoutes />}>
-                    <Route path="*" element={<MainView />} />
-                </Route>
-                <Route element={<PublicRoutes />}>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/createAccount" element={<CreateAccount />} />
-                </Route>
-            </Routes>
-        </BrowserRouter>
-    </Provider>
-);
-
-export default Chatter;
+export default function Chatter() {
+    return (
+        <Provider store={store}>
+            <CssBaseline />
+    
+            <BrowserRouter>
+                <Routes>
+                    <Route element={<PrivateRoutes />}>
+                        <Route path="*" element={<MainView />} />
+                    </Route>
+                    <Route element={<PublicRoutes />}>
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/createAccount" element={<CreateAccount />} />
+                    </Route>
+                </Routes>
+            </BrowserRouter>
+        </Provider>
+    );
+};

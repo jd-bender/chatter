@@ -7,7 +7,7 @@ import Home from './Home';
 import UserProfileEditor from './UserProfileEditor';
 import {navbarWidth, headerHeight} from './styles/layoutStyles';
 
-const MainView = () => {
+export default function MainView() {
     const styles = {
         flexGrow: 1, 
         p: 3, 
@@ -28,5 +28,3 @@ const MainView = () => {
         </Box>
     );
 };
-
-export default MainView;
