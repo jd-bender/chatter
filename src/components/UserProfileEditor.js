@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {Box, Typography, TextField, Button} from '@mui/material';
+import {Box, Typography, TextField, Button, CircularProgress} from '@mui/material';
 import {updateEmail} from 'firebase/auth';
-import {update, ref} from 'firebase/database';
+import {update, ref, set} from 'firebase/database';
 import {database as db, auth} from '../firebase';
 import {setUser} from '../reducers/userSlice';
 import ToastAlert from './ToastAlert';
@@ -13,6 +13,7 @@ export default function UserProfileEditor() {
     const [firstName, setFirstName] = useState(user.firstName || "");
     const [lastName, setLastName] = useState(user.lastName || "");
     const [email, setEmail] = useState(user.email || "");
+    const [updating, setUpdating] = useState(false);
     const [successAlertOpen, setSuccessAlertOpen] = useState(false);
     const [errorAlertOpen, setErrorAlertOpen] = useState(false);
 
@@ -31,14 +32,18 @@ export default function UserProfileEditor() {
                 email
             }));
 
+            setUpdating(false);
             setSuccessAlertOpen(true);
         }).catch(e => {
+            setUpdating(false);
             setErrorAlertOpen(true);
             console.error(e);
         });
     };
 
     const saveProfileChanges = () => {
+        setUpdating(true);
+
         updateEmail(auth.currentUser, email).then(() => {
             updateUserData();
         }).catch(e => {
@@ -69,7 +74,15 @@ export default function UserProfileEditor() {
                 sx={inputStyles}
                 onChange={(e) => setEmail(e.target.value)} />
 
-            <Button variant="contained" onClick={saveProfileChanges}>Save Changes</Button>
+            {
+                updating ?
+                    <CircularProgress />
+                    :
+                    <Button variant="contained" onClick={saveProfileChanges}>Save Changes</Button>
+            }
+            
+
+
 
             <ToastAlert open={successAlertOpen} openStateChanger={setSuccessAlertOpen} severity="success" />
             <ToastAlert open={errorAlertOpen} openStateChanger={setErrorAlertOpen} severity="error" />
