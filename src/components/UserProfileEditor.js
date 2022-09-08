@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {Box, Typography, TextField, Button} from '@mui/material';
 import {updateEmail} from 'firebase/auth';
 import {update, ref} from 'firebase/database';
 import {database as db, auth} from '../firebase';
+import {setUser} from '../reducers/userSlice';
 import ToastAlert from './ToastAlert';
 import {mainViewStyles, inputStyles} from '../styles/layoutStyles';
 
@@ -12,22 +13,29 @@ export default function UserProfileEditor() {
     const [firstName, setFirstName] = useState(user.firstName || "");
     const [lastName, setLastName] = useState(user.lastName || "");
     const [email, setEmail] = useState(user.email || "");
-    const [alertOpen, setAlertOpen] = useState(false);
-    const [alertSeverity, setAlertSeverity] = useState("");
+    const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+    const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+
+    const dispatch = useDispatch();
 
     const updateUserData = () => {
         return update(ref(db, `users/${user.uid}`), {
+            firstName,
+            lastName,
+            email
+        }).then(() => {
+            dispatch(setUser({
+                uid: user.uid,
                 firstName,
                 lastName,
                 email
-            }).then(() => {
-                dispatch(setUser({
-                    uid: user.uid,
-                    firstName,
-                    lastName,
-                    email
-                }));
-            });
+            }));
+
+            setSuccessAlertOpen(true);
+        }).catch(e => {
+            setErrorAlertOpen(true);
+            console.error(e);
+        });
     };
 
     const saveProfileChanges = () => {
@@ -37,10 +45,6 @@ export default function UserProfileEditor() {
             console.error(e);
             updateUserData();
         });
-    };
-
-    const openAlert = () => {
-        setAlertSeverity
     };
 
     return (
@@ -67,7 +71,8 @@ export default function UserProfileEditor() {
 
             <Button variant="contained" onClick={saveProfileChanges}>Save Changes</Button>
 
-            <ToastAlert open={alertOpen} severity={alertSeverity} />
+            <ToastAlert open={successAlertOpen} openStateChanger={setSuccessAlertOpen} severity="success" />
+            <ToastAlert open={errorAlertOpen} openStateChanger={setErrorAlertOpen} severity="error" />
         </Box>
     );
 };
