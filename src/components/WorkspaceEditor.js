@@ -1,14 +1,19 @@
 import React, {useState} from 'react';
-import {Box, Typography, TextField, Button} from '@mui/material';
+import {Box, Typography, TextField, Button, CircularProgress} from '@mui/material';
 import {pushDB} from '../databaseActions';
 import {mainViewStyles, inputStyles} from '../styles/layoutStyles';
 
 export default function WorkspaceEditor() {
     const [workspaceName, setWorkspaceName] = useState('');
+    const [saving, setSaving] = useState(false);
 
     const saveNewWorkspace = () => {
         if (workspaceName.length > 5) {
-            pushDB(`chatter/workspaces`, {name: workspaceName});
+            setSaving(true);
+            pushDB(`chatter/workspaces`, {name: workspaceName}).then(() => {
+                setWorkspaceName('');
+                setSaving(false);
+            });
         }
     };
 
@@ -22,7 +27,12 @@ export default function WorkspaceEditor() {
                 sx={inputStyles}
                 onChange={(e) => setWorkspaceName(e.target.value)} />
 
-            <Button variant="contained" onClick={saveNewWorkspace}>Create Workspace</Button>
+            {
+                saving ?
+                    <CircularProgress />
+                    :
+                    <Button variant="contained" onClick={saveNewWorkspace}>Create Workspace</Button>
+            }
         </Box>
     );
 };
