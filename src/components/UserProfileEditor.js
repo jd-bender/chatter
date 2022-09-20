@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Box, Typography, TextField, Button, CircularProgress} from '@mui/material';
 import {updateEmail} from 'firebase/auth';
-import {update, ref, set} from 'firebase/database';
+import {update, ref} from 'firebase/database';
 import {database as db, auth} from '../firebase';
 import {setUser} from '../reducers/userSlice';
 import ToastAlert from './ToastAlert';
@@ -80,9 +80,6 @@ export default function UserProfileEditor() {
                     :
                     <Button variant="contained" onClick={saveProfileChanges}>Save Changes</Button>
             }
-            
-
-
 
             <ToastAlert open={successAlertOpen} openStateChanger={setSuccessAlertOpen} severity="success" />
             <ToastAlert open={errorAlertOpen} openStateChanger={setErrorAlertOpen} severity="error" />
