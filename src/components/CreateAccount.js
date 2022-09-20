@@ -1,11 +1,9 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {Box, TextField, Button, CircularProgress} from '@mui/material';
-import {createUserWithEmailAndPassword} from 'firebase/auth';
+import {createUserAccount, setDB} from '../databaseActions';
 import {setUser} from '../reducers/userSlice';
 import {useDispatch} from 'react-redux';
-import {set, ref} from 'firebase/database';
-import {auth, database as db} from '../firebase';
 import {middleOfScreenStyles, inputStyles} from '../styles/layoutStyles';
 
 export default function CreateAccount() {  
@@ -20,8 +18,8 @@ export default function CreateAccount() {
     const submitAccountDetails = () => {
         setIsCreatingAccount(true);
 
-        createUserWithEmailAndPassword(auth, email, password).then(userData => {
-            set(ref(db, `users/${userData.user.uid}`), {
+        createUserAccount(email, password).then(userData => {
+            setDB(`users/${userData.user.uid}`, {
                 firstName,
                 lastName,
                 email

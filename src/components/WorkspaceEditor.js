@@ -6,7 +6,9 @@ export default function WorkspaceEditor() {
     const [workspaceName, setWorkspaceName] = useState('');
 
     const saveNewWorkspace = () => {
-
+        if (workspaceName.length > 5) {
+            
+        }
     };
 
     return (
