@@ -1,9 +1,7 @@
 import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Box, Typography, TextField, Button, CircularProgress} from '@mui/material';
-import {updateEmail} from 'firebase/auth';
-import {update, ref} from 'firebase/database';
-import {database as db, auth} from '../firebase';
+import {updateDB, updateUserEmail} from '../databaseActions';
 import {setUser} from '../reducers/userSlice';
 import ToastAlert from './ToastAlert';
 import {mainViewStyles, inputStyles} from '../styles/layoutStyles';
@@ -20,7 +18,7 @@ export default function UserProfileEditor() {
     const dispatch = useDispatch();
 
     const updateUserData = () => {
-        return update(ref(db, `users/${user.uid}`), {
+        return updateDB(`users/${user.uid}`, {
             firstName,
             lastName,
             email
@@ -44,7 +42,7 @@ export default function UserProfileEditor() {
     const saveProfileChanges = () => {
         setUpdating(true);
 
-        updateEmail(auth.currentUser, email).then(() => {
+        updateUserEmail(email).then(() => {
             updateUserData();
         }).catch(e => {
             console.error(e);

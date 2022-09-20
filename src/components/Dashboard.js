@@ -5,6 +5,7 @@ import NavBar from './NavBar';
 import {Routes, Route} from "react-router-dom";
 import Home from './Home';
 import UserProfileEditor from './UserProfileEditor';
+import WorkspaceEditor from './WorkspaceEditor';
 import {navbarWidth, headerHeight} from '../styles/layoutStyles';
 
 export default function Dashboard() {
@@ -23,6 +24,7 @@ export default function Dashboard() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/myProfile" element={<UserProfileEditor />} />
+                    <Route path="/workspaceEditor" element={<WorkspaceEditor />} />
                 </Routes>
             </Box>
         </Box>
